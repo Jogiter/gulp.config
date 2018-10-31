@@ -1,0 +1,8 @@
+{
+    "auth": {
+        "host": "*",
+        "port": "*",
+        "user": "*",
+        "password": "*"
+    }
+}

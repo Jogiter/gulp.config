@@ -15,7 +15,7 @@ const gulpSequence = require("gulp-sequence");
 const src = "../";
 const dest = "../dist/";
 const host = "host"
-const remotePath = "remotePath"
+const remotePath = "your remotePath"
 let isProduction = true;
 
 // 版本控制(缓存处理)
@@ -120,10 +120,38 @@ gulp.task('eslint', function() {
         // configFile: './.eslintrc.js'
     }))
     .pipe(eslint.format())
-    // .pipe(eslint.failAfterError());
+    .pipe(eslint.failAfterError());
 })
 
 gulp.task("dev", function() {
+  isProduction = false;
+  gulpSequence("clean", "rev", "min")((err) => {
+    if (err) console.log(err);
+
+    gulp.watch(
+      [
+        src + "*.html",
+        src + "js/**/*",
+        src + "css/**/*",
+        src + "images/**/*",
+        src + "css/**/*"
+      ],
+      function() {
+        gulpSequence("rev", "min")((err) => {
+          if (err) console.log(err);
+        });
+      }
+    );
+  });
+});
+
+gulp.task("build", function() {
+  gulpSequence("clean", "rev", "min")((err) => {
+    if (err) console.log(err);
+  });
+});
+
+gulp.task("dev:ftp", function() {
   isProduction = false;
   gulpSequence("clean", "rev", "min", "sftp")((err) => {
     if (err) console.log(err);
@@ -145,8 +173,8 @@ gulp.task("dev", function() {
   });
 });
 
-gulp.task("build", function() {
-  gulpSequence("clean", "rev", ["min:js", "min:css"], "sftp")((err) => {
+gulp.task("build:ftp", function() {
+  gulpSequence("clean", "rev", "min", "sftp")((err) => {
     if (err) console.log(err);
   });
 });

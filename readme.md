@@ -5,11 +5,12 @@
 ### Note
 
 - `.ftppass` 文件需要添加到 `.gitignore` 里面,切记!!!
+- 使用 `sftp` 时，`remotePath` 需要在 `gulpfile.js` 中配置
 
 TODO
 
 - [x] [gulp-sftp ](https://github.com/gtg092x/gulp-sftp) ~~比现有的 ftp 更友好~~
 - [x] 压缩 HTML
 - [ ] 压缩图片,新增配置,默认不加入序列
-- [x] eslint, fix 不工作
+- [ ] eslint, fix 不工作
 - [ ] babel, 参考 [gulp@next](https://github.com/gulpjs/gulp/tree/v4.0.0)
